@@ -1,0 +1,73 @@
+#addme {
+  width: 120px;
+  height: 30px;
+  border-radius: 15px;
+  background-color: #05595b;
+  color: white;
+  border: none;
+  outline: none;
+}
+button {
+  cursor: pointer;
+}
+input {
+  height: 30px;
+  width: 15vw;
+  outline: none;
+  margin: 0 16px;
+  border: none;
+  border-bottom: 1px black solid;
+}
+#container {
+  margin-top: 100px;
+}
+#taskBox {
+  display: grid;
+  grid-template-columns: 30% 30% 30%;
+  grid-gap: 5%;
+  width: 60%;
+  margin: 5vh auto;
+}
+.taskCard {
+  height: 22vh;
+  box-shadow: 4px 4px 8px 8px #888888;
+  background-color: #e2d784;
+  padding: 10px;
+  border: 1px solid #e2d784;
+  overflow: scroll;
+}
+.taskCard::-webkit-scrollbar {
+  display: none;
+}
+.taskCard span {
+  font-weight: 600;
+}
+.cardButton {
+  background-color: #05595b;
+  color: white;
+  border: #05595b 2px solid;
+  outline: none;
+  padding: 2px;
+  margin: 0 3px;
+  margin-top: 8vh;
+}
+.changeStatus {
+  width: 200px;
+  height: 100px;
+  background-color: #e2d784;
+  position: absolute;
+  left: 42%;
+  top: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 10px 10px 10px 4px;
+}
+.changeStatus button {
+  margin: 0 8px;
+  background-color: #05595b;
+  color: white;
+  border: #05595b 2px solid;
+  outline: none;
+  padding: 2px;
+}
