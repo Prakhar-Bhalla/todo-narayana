@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { addData, changeStatus, getData, deleteTask } from "../features/Todos/actions";
+import { nanoid } from 'nanoid'
 import "./Todos.css";
 
 export const Todos = () => {
@@ -9,21 +10,18 @@ export const Todos = () => {
     const [flag,setFlag] = useState(false);
     const [isComplete, setIsComplete] = useState();
     const [id, setId] = useState();
-    const {loading, todos, error} = useSelector(({todosState}) => {return {...todosState}}, function(prev,curr) {
-        if(prev.loading === curr.loading && prev.error === curr.error)
-        {
-            if(prev.todos.length === curr.todos.length)
+    const {todos} = useSelector(({todosState}) => {return {...todosState}}, function(prev,curr) {
+            if(prev?.todos?.length === curr?.todos?.length)
             {
-                for(let i = 0; i<prev.todos.length; i++)
+                for(let i = 0; i<prev?.todos?.length; i++)
                 {
-                    if(prev.todos[i] !== curr.todos[i])
+                    if(prev?.todos[i] !== curr?.todos[i])
                     {
                         return false;
                     }
                 }
                 return true;
             }
-        }
         return false;
     });
 
@@ -40,7 +38,7 @@ export const Todos = () => {
     const addTodosList = () => {
        if(text.Task.length !== 0 && text.date.length !== 0 && text.time.length !== 0)
        {
-           dispatch(addData(text));
+           dispatch(addData({...text, id : nanoid(6)}));
            setText({Task : "", date : "", time : ""});
            if(flag)
            {
@@ -83,11 +81,11 @@ export const Todos = () => {
         dispatch(getData());
     },[]);
 
-    let activeTodos = todos.filter(t => {
+    let activeTodos = todos?.filter(t => {
         return !t.status
     })
 
-    return loading ? (<div>Loading....</div>) : error ? (<div>Something went wrong!</div>) : (<div id="container">
+    return (<div id="container">
     {flag && <p style={{color : "red"}}>Input feilds can't be empty</p>} 
     <input disabled={isUpdated} value={text.Task} name="Task" placeholder="Enter task" onChange={handleChange}/>
     <input disabled={isUpdated} value={text.date} type="date" name="date" onChange={handleChange}/>
@@ -95,7 +93,7 @@ export const Todos = () => {
     <button disabled={isUpdated} id="addme" onClick={addTodosList}>ADD TASK</button>
     
     <div id="taskBox">
-    {activeTodos.map((el) => {
+    {activeTodos?.map((el) => {
         return <div key={el.id} className="taskCard">
         <span style={{color : "crimson"}}>{el.Task}</span>
         <br/>

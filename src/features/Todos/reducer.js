@@ -1,14 +1,24 @@
-import {ADD_TODO, ADD_TODO_ERROR, ADD_TODO_LOADING, ADD_TODO_SUCCESS, CHANGE_STATUS, GET_TODO_ERROR, GET_TODO_LOADING, GET_TODO_SUCCESS} from "./actionType.js"
+import {ADD_TODO_SUCCESS, CHANGE_STATUS, GET_TODO_SUCCESS, REMOVE_TODO} from "./actionType.js"
 
-export const reducer = (state = {loading : false, todos : [], error : false}, {type,payload}) => {
+export const reducer = (state = {todos : []}, {type,payload}) => {
     switch(type) {
-        case ADD_TODO : return {...state, todos : [...state.todos, payload]}
-        case ADD_TODO_LOADING : return {...state, loading : true}
-        case ADD_TODO_SUCCESS : return {...state, todos : [...state.todos, payload], loading : false}
-        case ADD_TODO_ERROR : return {...state, loading : false, error : payload}
-        case GET_TODO_LOADING : return {...state, loading : true}
-        case GET_TODO_SUCCESS : return {...state, todos : payload, loading : false}
-        case GET_TODO_ERROR : return {...state, loading : false, error : payload}
+        case ADD_TODO_SUCCESS : return {...state, todos : [...state?.todos, payload]}
+        case GET_TODO_SUCCESS : return state
+        case REMOVE_TODO : 
+        let todo = state.todos.filter(t => {
+            return t.id !== payload
+        })
+        return {todos : todo}
+        case CHANGE_STATUS : 
+        let to = state.todos.map(t => {
+            if(t.id === payload)
+            {
+                let x = t.status;
+                return {...t, status : !x}
+            }
+            return t;
+        })
+        return {todos : to};
         default : return state
     }
 }

@@ -5,12 +5,8 @@ import "./Todos.css";
 
 export const Completed = () => {
     const [isUpdated, setIsUpdated] = useState(false);
-    const [flag,setFlag] = useState(false);
-    const [isComplete, setIsComplete] = useState();
     const [id, setId] = useState();
-    const {loading, todos, error} = useSelector(({todosState}) => {return {...todosState}}, function(prev,curr) {
-        if(prev.loading === curr.loading && prev.error === curr.error)
-        {
+    const {todos} = useSelector(({todosState}) => {return {...todosState}}, function(prev,curr) {
             if(prev.todos.length === curr.todos.length)
             {
                 for(let i = 0; i<prev.todos.length; i++)
@@ -22,7 +18,6 @@ export const Completed = () => {
                 }
                 return true;
             }
-        }
         return false;
     });
 
@@ -40,7 +35,6 @@ export const Completed = () => {
     const openDiv = (el) => {
         setIsUpdated(true)
         setId(el.id);
-        setIsComplete(el.status);
     }
 
     useEffect(() => {
@@ -51,7 +45,7 @@ export const Completed = () => {
         return t.status
     })
 
-    return loading ? (<div>Loading....</div>) : error ? (<div>Something went wrong!</div>) : (<div id="container">
+    return (<div id="container">
     <div id="taskBox">
     {completedTodos.map((el) => {
         return <div key={el.id} className="taskCard">
